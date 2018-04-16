@@ -53,13 +53,28 @@ class App extends Component {
         })
     }
 
+    reset = (event, value) => {
+        var time = new Date();
+        var initialDifference = 600000;
+        this.setState({
+            current: time.getTime(),
+            zoneOffset: time.getTimezoneOffset(),
+            start: time.getTime(),
+            end: (time.getTime() + initialDifference),
+            diff: ("00:" + initialDifference / 60000),
+            isBreak: false,
+            breakTime: 0,
+            breakElement: ''
+        });
+    }
+
     render() {
         return (
             <div className="App">
                 <MTP>
                     <AppBar
                         title={Str.APP_TITLE}
-                        iconElementRight={<IconButton><ResetIcon/></IconButton>}
+                        iconElementRight={<IconButton onClick={this.reset}><ResetIcon/></IconButton>}
                         iconElementLeft={<IconButton><TimeIcon/></IconButton>}
                     />
                 </MTP>
