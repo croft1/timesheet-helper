@@ -32,7 +32,6 @@ class App extends Component {
     }
 
     shouldComponentUpdate(){
-        // console.log(this.state);
         return true;
     }
 
@@ -122,28 +121,21 @@ class App extends Component {
         if (timeDiffInMillis < 0){
             timeDiffInMillis = timeDiffInMillis * -1;
         }
-        console.log(timeDiffInMillis);
         var minutes = timeDiffInMillis / 60000;
         var hours = 0
         var output = '';
-        console.log(minutes);
         if(this.state.breakTime > 0){
             minutes = minutes - this.state.breakTime
         }
-        console.log(minutes + "minus break");
         if(minutes > 59){
             //more than an hour
             hours = Math.trunc(minutes / 60);
-            console.log(hours);
             minutes = minutes % 60;
-            console.log(minutes);
             output = hours + ":" +  minutes + " ";
         }else{
             //less than an hour
             output = "0:" + minutes;
         }
-        // console.log(minutes);
-
         this.setState({diff: output });
     }
 }
