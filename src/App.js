@@ -18,7 +18,7 @@ class App extends Component {
             start: time.getTime(),
             end: (time.getTime() + initialDifference),
             diff: ("00:" + initialDifference / 60000),
-            isBreak: false,
+            tookBreak: false,
             breakTime: 0,
             breakElement: ''
         }
@@ -47,10 +47,10 @@ class App extends Component {
             toSet = breakElement;
         }
         this.setState({
-            isBreak: value,
+            tookBreak: value,
             breakElement: toSet,
             breakTime: 0
-        })
+        }, () => {this.getDur()})
     }
 
     reset = (event, value) => {
@@ -62,7 +62,7 @@ class App extends Component {
             start: time.getTime(),
             end: (time.getTime() + initialDifference),
             diff: ("00:" + initialDifference / 60000),
-            isBreak: false,
+            tookBreak: false,
             breakTime: 0,
             breakElement: ''
         });
@@ -89,6 +89,7 @@ class App extends Component {
                         <Toggle
                             label="Break?"
                             onToggle={this.onBreakToggle}
+                            toggled={this.state.tookBreak}
                         />
                         {this.state.breakElement}
 
