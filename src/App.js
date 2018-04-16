@@ -13,14 +13,20 @@ class App extends Component {
         super(props);
         var time = new Date();
         this.state = {
-            time: {
-                current: time.getTime(),
-                zoneOffset: time.getTimezoneOffset(),
-                start: time.getTime(),
-                end: time.getTime()
-            }
+            current: time.getTime(),
+            zoneOffset: time.getTimezoneOffset(),
+            start: time.getTime(),
+            end: time.getTime(),
+            diff: 0,
+            isBreak: false,
+
 
         }
+    }
+
+    shouldComponentUpdate(){
+        console.log(this.state);
+        return true;
     }
 
     render() {
@@ -38,24 +44,32 @@ class App extends Component {
                         <TimePicker
                             format="ampm"
                             hintText={Str.TIME_START}
-                            value={this.state.time.current}
+                            value={new Date(this.state.current)}
                             onChange={this.handleStartChange}
                         />
                         <TimePicker
                             format="ampm"
                             hintText={Str.TIME_END}
-                            value={this.state.time.current}
+                            value={new Date(this.state.current + 1000000)}
                             onChange={this.handleEndChange}
                         />
                     </div>
                 </MTP>
-                <h1>Duration: {this.getDur()}</h1>
+                <h1>Duration: {this.state.diff}</h1>
             </div>
         );
     }
+    handleStartChange = (event, date) => {
+        this.setState({start: date});
+        this.getDur();
+    }
+    handleEndChange = (event, date) => {
+        this.setState({end: date});
+        this.getDur();
 
+    }
     getDur(){
-        return (this.state.time.start - this.state.time.end);
+        this.setState({diff: (this.state.time.start - this.state.time.end) });
     }
 }
 
